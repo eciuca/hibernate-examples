@@ -8,15 +8,16 @@
         <property name="hibernate.connection.url">jdbc:mysql://localhost/scoala?serverTimezone=UTC</property>
         <property name="hibernate.connection.username">root</property>
         <property name="hibernate.connection.password">password</property>
-        <property name="hibernate.hbm2ddl.auto">update</property>
-        <property name="show_sql">false</property>
+        <property name="hibernate.hbm2ddl.auto">create-drop</property>
+        <property name="show_sql">true</property>
         <property name="format_sql">true</property>
         <property name="use_sql_comments">false</property>
 
         <mapping class="sql.entities.Clasa"/>
-        <mapping class="sql.entities.Elevi"/>
+        <mapping class="sql.entities.Elev"/>
         <mapping class="sql.entities.Materie"/>
-        <mapping class="sql.entities.Note"/>
-        <mapping class="sql.entities.Profesori"/>
+        <mapping class="sql.entities.Nota"/>
+        <mapping class="sql.entities.Profesor"/>
+        <mapping class="sql.entities.Persoana"/>
     </session-factory>
 </hibernate-configuration>

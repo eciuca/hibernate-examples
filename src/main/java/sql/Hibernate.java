@@ -9,6 +9,9 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import sql.entities.*;
 
+import javax.persistence.Query;
+
+
 public class Hibernate {
 
     public static void main(String[] args) {
@@ -35,21 +38,28 @@ public class Hibernate {
         Clasa clasa = new Clasa("11C");
         session.persist(clasa);
 
-        Elevi elevi = new Elevi("CelMaiBun La Chimie", clasa);
-        session.persist(elevi);
+        Elev elev = new Elev("CelMaiBun La Chimie", clasa);
+        elev.setCnp("191022322222");
+        session.persist(elev);
 
         Materie materie = new Materie("Chimie");
         session.persist(materie);
 
-        Profesori prof = new Profesori("Mendeleev");
+        Profesor prof = new Profesor("Mendeleev");
+        prof.setCnp("291022322222");
+        Adresa a = new Adresa();
+        a.setBloc("R1");
+        a.setScara("B");
+        a.setStrada("Drm Malu Mierii");
+        prof.setAdresa(a);
         session.persist(prof);
 
 
 
-        Note note = new Note("10", prof, materie,elevi);
-        session.persist(note);
+        Nota nota = new Nota("10", prof, materie, elev);
+        session.persist(nota);
 
-        System.out.println(note);
+        System.out.println(nota);
 
 
 
@@ -57,10 +67,6 @@ public class Hibernate {
        // session.persist(elevi);
 
        // System.out.println(elevi);
-
-
-
-
 
         transaction.commit();
         session.close();

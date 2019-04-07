@@ -17,8 +17,8 @@ public class Clasa {
 
     String numeClasa;
 
-    @OneToMany(mappedBy = "clasa")
-    List<Elevi> eleviList;
+    @OneToMany(mappedBy = "clasa", fetch = FetchType.LAZY)
+    List<Elev> elevList;
 
     @Override
     public String toString() {

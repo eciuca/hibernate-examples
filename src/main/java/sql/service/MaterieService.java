@@ -3,6 +3,7 @@ package sql.service;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import sql.entities.Materie;
 import sql.SessionFactorySingleton;
 
@@ -48,6 +49,25 @@ public class MaterieService {
         Materie materie = new Materie(numeMaterie);
         session.persist(materie);
 
+        transaction.commit();
+        session.close();
+
+        return materie;
+
+    }
+
+
+    public Materie findMaterieByName(String name) {
+
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+
+        Query query = session.createQuery(
+                "select m from Materie m where m.numeMaterie = :name");
+
+        query.setParameter("name", name);
+
+        Materie materie = (Materie) query.uniqueResult();
         transaction.commit();
         session.close();
 
