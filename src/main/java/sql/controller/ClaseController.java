@@ -1,7 +1,7 @@
 package sql.controller;
 
-import sql.entities.Elev;
-import sql.service.EleviService;
+import sql.entities.Clasa;
+import sql.service.ClasaService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,13 +11,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet(urlPatterns = "/elevi")
-public class EleviController extends HttpServlet {
+@WebServlet(urlPatterns = "/clase")
+public class ClaseController extends HttpServlet {
 
-    private final EleviService eleviService;
 
-    public EleviController() {
-        this.eleviService = new EleviService();
+    private final ClasaService clasaService;
+
+    public ClaseController() {
+        this.clasaService = new ClasaService();
     }
 
     @Override
@@ -25,36 +26,34 @@ public class EleviController extends HttpServlet {
         PrintWriter writer = resp.getWriter();
 
         writer.println("<html><head></head><body>");
-        writer.println("<p>Hello</p>");
+        writer.println("<p>Clase</p>");
 
-        String id= req.getParameter("id");
+        String id = req.getParameter("id");
         if (id != null && !id.isEmpty()) {
             writer.println("<span>");
-            writer.println(eleviService.findElevById(Integer.parseInt(id)));
-            writer.println("</span>");
+            Clasa clasaById = clasaService.findClasaById(Integer.parseInt(id));
+            if (clasaById == null) {
+                req.setAttribute("notFoundObject", "Clasa cu id " + id);
+                getServletContext().getRequestDispatcher("/notfound").forward(req, resp);
+                return;
+            } else {
+                writer.println(clasaById);
+                writer.println("</span>");
+            }
         } else {
             writer.println("<ul>");
-            for (Elev elev : eleviService.findAllElevi()) {
-                writer.println("<li>" + elev.toString() + "</li>");
+            for (Clasa clasa : clasaService.findAllClase()) {
+                writer.println("<li>" + clasa.toString() + "</li>");
             }
         }
         writer.println("</ul>");
         writer.println("</body></html>");
-
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String nume = req.getParameter("nume");
-        int idClasa = 1;
 
-        eleviService.addElev(nume, 1);
-
-    }
-
-    @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String id= req.getParameter("id");
-        eleviService.deleteElevById(Integer.parseInt(id));
+        clasaService.addClasa(nume);
     }
 }

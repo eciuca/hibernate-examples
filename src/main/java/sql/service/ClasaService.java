@@ -3,8 +3,11 @@ package sql.service;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import sql.SessionFactorySingleton;
 import sql.entities.Clasa;
+
+import java.util.List;
 
 public class ClasaService {
 
@@ -40,6 +43,21 @@ public class ClasaService {
 
         transaction.commit();
         session.close();
+    }
+
+    public List<Clasa> findAllClase() {
+
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+
+        Query allClase = session.createQuery("select c from Clasa c");
+
+        List<Clasa> list = allClase.getResultList();
+        transaction.commit();
+        session.close();
+
+        return list;
+
     }
 
     public Clasa addClasa(String numeClasa) {
