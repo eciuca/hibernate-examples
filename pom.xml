@@ -7,6 +7,7 @@
     <groupId>com.sda.grupa5.sql</groupId>
     <artifactId>scoala</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>war</packaging>
 
     <dependencies>
         <dependency>
@@ -21,6 +22,7 @@
         </dependency>
     </dependencies>
     <build>
+        <finalName>scoala</finalName>
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
